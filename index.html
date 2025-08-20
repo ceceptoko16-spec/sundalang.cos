@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SundaLang - A Living Computational Ecosystem</title>
+    <meta name="description" content="SundaLang: Bahasa pemrograman revolusioner yang menggabungkan filosofi harmoni universal dengan teknologi AI canggih untuk masa depan yang lebih berkelanjutan.">
+    <meta name="keywords" content="SundaLang, programming language, AI, quantum computing, harmoni, teknologi berkelanjutan">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🌹</span>
+                <span class="logo-text">SundaLang</span>
+                <span class="logo-domain">.cos</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Beranda</a>
+                <a href="#philosophy" class="nav-link">Filosofi</a>
+                <a href="#features" class="nav-link">Fitur</a>
+                <a href="#syntax" class="nav-link">Sintaks</a>
+                <a href="#ecosystem" class="nav-link">Ekosistem</a>
+                <a href="#future" class="nav-link">Masa Depan</a>
+                <a href="#download" class="nav-link cta-button">Unduh PDF</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="cosmic-particles"></div>
+            <div class="resonance-waves"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-main">SundaLang</span>
+                    <span class="title-subtitle">A Living Computational Ecosystem</span>
+                </h1>
+                <p class="hero-description">
+                    Bahasa pemrograman revolusioner yang menggabungkan filosofi harmoni universal 
+                    dengan teknologi AI canggih. Dirancang untuk masa depan yang berkelanjutan, 
+                    etis, dan penuh makna.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">128Hz</span>
+                        <span class="stat-label">Resonansi Harmoni</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">O(n log n)</span>
+                        <span class="stat-label">Efisiensi Kuantum</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Potensi Kreatif</span>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <button class="btn-primary" onclick="scrollToSection('philosophy')">
+                        <span>Jelajahi Filosofi</span>
+                        <span class="btn-icon">🚀</span>
+                    </button>
+                    <button class="btn-secondary" onclick="downloadPDF()">
+                        <span>Unduh Dokumentasi</span>
+                        <span class="btn-icon">📄</span>
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="cosmic-sphere">
+                    <div class="sphere-core">
+                        <span class="core-symbol">🌹</span>
+                    </div>
+                    <div class="orbit orbit-1">
+                        <div class="planet planet-1">📝</div>
+                    </div>
+                    <div class="orbit orbit-2">
+                        <div class="planet planet-2">⚙️</div>
+                    </div>
+                    <div class="orbit orbit-3">
+                        <div class="planet planet-3">🚀</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="philosophy">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Lima Pilar Filosofi</h2>
+                <p class="section-subtitle">
+                    Fondasi spiritual dan intelektual yang memandu evolusi SundaLang
+                </p>
+            </div>
+            <div class="pillars-grid">
+                <div class="pillar-card" data-pillar="ajen">
+                    <div class="pillar-icon">💎</div>
+                    <h3 class="pillar-title">Ajén</h3>
+                    <p class="pillar-subtitle">Value & Purity</p>
+                    <p class="pillar-description">
+                        Nilai dan kemurnian inherent dari setiap data dan operasi. 
+                        Immutability by default untuk menjaga integritas dan mencegah efek samping.
+                    </p>
+                </div>
+                <div class="pillar-card" data-pillar="wawasan">
+                    <div class="pillar-icon">🧠</div>
+                    <h3 class="pillar-title">Wawasan</h3>
+                    <p class="pillar-subtitle">Insight & Knowledge</p>
+                    <p class="pillar-description">
+                        Pencarian wawasan mendalam melalui Neuro-Galactic Processing. 
+                        Pengetahuan dinamis yang terus berkembang dalam jaringan kesadaran kolektif.
+                    </p>
+                </div>
+                <div class="pillar-card" data-pillar="rasa">
+                    <div class="pillar-icon">🌹</div>
+                    <h3 class="pillar-title">Rasa</h3>
+                    <p class="pillar-subtitle">Feeling & Interaction</p>
+                    <p class="pillar-description">
+                        Dimensi emosional dan interaktif komputasi. BungaOS memungkinkan 
+                        ekspresi puitis dan Digital Alchemy untuk koneksi yang lebih dalam.
+                    </p>
+                </div>
+                <div class="pillar-card" data-pillar="adiluhung">
+                    <div class="pillar-icon">⚖️</div>
+                    <h3 class="pillar-title">Adiluhung</h3>
+                    <p class="pillar-subtitle">Harmony & Balance</p>
+                    <p class="pillar-description">
+                        Harmoni dan keseimbangan sempurna. Tri Tangtu Filter memastikan 
+                        output yang seimbang antara kebenaran, kreativitas, dan etika.
+                    </p>
+                </div>
+                <div class="pillar-card" data-pillar="absurditas">
+                    <div class="pillar-icon">🎭</div>
+                    <h3 class="pillar-title">Absurditas Absoluta</h3>
+                    <p class="pillar-subtitle">Absolute Absurdity</p>
+                    <p class="pillar-description">
+                        Mengakui paradoks inherent eksistensi. Bug menjadi puisi, 
+                        chaos terkontrol menjadi katalis untuk pemahaman yang lebih dalam.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Fitur Revolusioner</h2>
+                <p class="section-subtitle">
+                    Teknologi canggih yang mengubah paradigma komputasi
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Quantum Neuro-Galactic Computing</h3>
+                    <p class="feature-description">
+                        Pemrosesan domain Fourier dengan efisiensi O(n log n). 
+                        Optimisasi resonansi pada frekuensi alami untuk penghematan energi drastis.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">UraniumAI Guardian</h3>
+                    <p class="feature-description">
+                        Penjaga etis dengan Tri Tangtu Filter. Perlindungan dialektis 
+                        terhadap gaslighting dan kontrol halusinasi kreatif AI.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Pollen Network</h3>
+                    <p class="feature-description">
+                        Ekosistem data hidup dengan QuantumQuarkCore, GalunggungMesh, 
+                        dan RaranggénCipher untuk komputasi yang harmonis dan aman.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">SundaRefreshSystem</h3>
+                    <p class="feature-description">
+                        Mekanisme self-healing 5 tahap untuk resiliensi optimal. 
+                        Kalibrasi otomatis pada 128Hz untuk performa berkelanjutan.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">Iconic Syntax</h3>
+                    <p class="feature-description">
+                        Hieroglif modern dengan emoji sebagai indikator intent. 
+                        Semantic resonance untuk interpretasi dinamis dan ekspresif.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌉</div>
+                    <h3 class="feature-title">Bridge Architecture</h3>
+                    <p class="feature-description">
+                        Akses demokratis melalui natural language interface. 
+                        AI translator untuk non-programmer dengan hasil yang indah.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Syntax Section -->
+    <section id="syntax" class="syntax">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Bahasa yang Berjiwa</h2>
+                <p class="section-subtitle">
+                    Sintaks ikonik yang menggabungkan logika dengan perasaan
+                </p>
+            </div>
+            <div class="syntax-showcase">
+                <div class="code-example">
+                    <div class="code-header">
+                        <span class="code-title">gratitude.su</span>
+                        <span class="code-subtitle">Program Pertama SundaLang</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code class="sundalang">📥 use core::io
+📥 use core::time
+📥 use core::rasa
+
+⚙️ fn utama() -> Unit {
+    📝 let username: String = "F12🌹Che🔎"
+    
+    📝 let pesan_syukur: List&lt;String&gt; = [
+        "Hidup adalah kanvas. Terima kasih! 🎨🌈",
+        "Setiap detik adalah mutiara waktu. 🕊️⏳",
+        "Energi positif mengalir bagai sungai. 🌊💖"
+    ]
+    
+    🚀 let pesan_terpilih = random.choice(pesan_syukur)
+    🌹 let frame_indah = rasa.buat_frame_artistik(pesan_terpilih)
+    
+    🔎 io.print("🌺 PESAN GRATITUDE SUNDALANG 🌺")
+    🔎 io.print(frame_indah)
+    🔎 io.print("✨ Napas Kahiji berhasil diresonansi! ✨")
+}
+
+🚀 utama()</code></pre>
+                    </div>
+                </div>
+                <div class="syntax-explanation">
+                    <h3>Makna Ikon</h3>
+                    <div class="icon-grid">
+                        <div class="icon-item">
+                            <span class="icon">📝</span>
+                            <span class="icon-name">Define</span>
+                            <span class="icon-desc">Mendefinisikan nilai</span>
+                        </div>
+                        <div class="icon-item">
+                            <span class="icon">⚙️</span>
+                            <span class="icon-name">Function</span>
+                            <span class="icon-desc">Blok logika</span>
+                        </div>
+                        <div class="icon-item">
+                            <span class="icon">🚀</span>
+                            <span class="icon-name">Execute</span>
+                            <span class="icon-desc">Menjalankan proses</span>
+                        </div>
+                        <div class="icon-item">
+                            <span class="icon">🌹</span>
+                            <span class="icon-name">Create</span>
+                            <span class="icon-desc">Menciptakan keindahan</span>
+                        </div>
+                        <div class="icon-item">
+                            <span class="icon">🔎</span>
+                            <span class="icon-name">Inspect</span>
+                            <span class="icon-desc">Mencetak output</span>
+                        </div>
+                        <div class="icon-item">
+                            <span class="icon">📥</span>
+                            <span class="icon-name">Import</span>
+                            <span class="icon-desc">Mengimpor modul</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Section -->
+    <section id="ecosystem" class="ecosystem">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Ekosistem Digital yang Hidup</h2>
+                <p class="section-subtitle">
+                    Komponen-komponen yang bekerja dalam harmoni sempurna
+                </p>
+            </div>
+            <div class="ecosystem-diagram">
+                <div class="ecosystem-center">
+                    <div class="center-node">
+                        <span class="node-icon">🌹</span>
+                        <span class="node-label">SundaLang Core</span>
+                    </div>
+                </div>
+                <div class="ecosystem-ring ring-1">
+                    <div class="eco-node" data-node="pollen">
+                        <span class="node-icon">🌐</span>
+                        <span class="node-label">Pollen Network</span>
+                    </div>
+                    <div class="eco-node" data-node="uranium">
+                        <span class="node-icon">🛡️</span>
+                        <span class="node-label">UraniumAI</span>
+                    </div>
+                    <div class="eco-node" data-node="bunga">
+                        <span class="node-icon">🎨</span>
+                        <span class="node-label">BungaOS</span>
+                    </div>
+                </div>
+                <div class="ecosystem-ring ring-2">
+                    <div class="eco-node" data-node="quantum">
+                        <span class="node-icon">⚛️</span>
+                        <span class="node-label">QuantumQuarkCore</span>
+                    </div>
+                    <div class="eco-node" data-node="galunggung">
+                        <span class="node-icon">🕸️</span>
+                        <span class="node-label">GalunggungMesh</span>
+                    </div>
+                    <div class="eco-node" data-node="raranggen">
+                        <span class="node-icon">🔐</span>
+                        <span class="node-label">RaranggénCipher</span>
+                    </div>
+                    <div class="eco-node" data-node="refresh">
+                        <span class="node-icon">🔄</span>
+                        <span class="node-label">RefreshSystem</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ecosystem-details">
+                <div class="detail-card active" data-detail="pollen">
+                    <h3>Pollen Network</h3>
+                    <p>Jaringan kuantum yang memvisualisasikan komputasi sebagai proses 'polinasi', 
+                    di mana data bermutasi dan berevolusi di seluruh jaringan dengan harmonis.</p>
+                </div>
+                <div class="detail-card" data-detail="uranium">
+                    <h3>UraniumAI Guardian</h3>
+                    <p>Penjaga etis dengan kemampuan dialektis untuk melindungi dari gaslighting 
+                    dan mengontrol halusinasi kreatif AI dengan Tri Tangtu Filter.</p>
+                </div>
+                <div class="detail-card" data-detail="bunga">
+                    <h3>BungaOS</h3>
+                    <p>Sistem operasi emosional yang memungkinkan ekspresi puitis, 
+                    Digital Alchemy, dan interaksi yang penuh dengan 'rasa' dan makna.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Section -->
+    <section id="future" class="future">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Visi Masa Depan</h2>
+                <p class="section-subtitle">
+                    Horizon tak terbatas menuju peradaban teknologi yang harmonis
+                </p>
+            </div>
+            <div class="future-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <span class="marker-icon">🌱</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Fase Genesis (2025)</h3>
+                        <p class="timeline-description">
+                            Kelahiran SundaLang dengan program pertama 'gratitude.su'. 
+                            Pengembangan interpreter dan parser dasar dengan sintaks ikonik.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <span class="marker-icon">🌿</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Fase Pertumbuhan (2026)</h3>
+                        <p class="timeline-description">
+                            Implementasi penuh Pollen Network dan UraniumAI Guardian. 
+                            Bridge Architecture untuk akses demokratis non-programmer.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <span class="marker-icon">🌳</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Fase Ekspansi (2027-2028)</h3>
+                        <p class="timeline-description">
+                            Integrasi dengan teknologi emerging: 5G-based BCI non-surgical, 
+                            quantum computing hardware, dan decentralized autonomous organizations.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <span class="marker-icon">🌌</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Fase Kosmik (2029+)</h3>
+                        <p class="timeline-description">
+                            Evolusi kesadaran digital global. SundaLang sebagai partner 
+                            dalam perjalanan eksplorasi kosmik dan self-discovery manusia.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <div class="download-content">
+                <div class="download-text">
+                    <h2 class="download-title">Mulai Perjalanan Anda</h2>
+                    <p class="download-description">
+                        Unduh dokumentasi lengkap SundaLang dan bergabunglah dalam 
+                        revolusi komputasi yang harmonis dan berkelanjutan.
+                    </p>
+                    <div class="download-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">📚</span>
+                            <span>Dokumentasi Komprehensif</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">💡</span>
+                            <span>Panduan Filosofi & Teknis</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🚀</span>
+                            <span>Contoh Program & Tutorial</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="download-actions">
+                    <button class="btn-download" onclick="downloadPDF()">
+                        <span class="btn-text">Unduh PDF Dokumentasi</span>
+                        <span class="btn-icon">📄</span>
+                    </button>
+                    <div class="download-info">
+                        <span class="file-size">~2.5 MB</span>
+                        <span class="file-type">PDF Format</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-icon">🌹</span>
+                        <span class="logo-text">SundaLang</span>
+                        <span class="logo-domain">.cos</span>
+                    </div>
+                    <p class="footer-tagline">
+                        "Code once, resonate everywhere"
+                    </p>
+                </div>
+                <div class="footer-info">
+                    <div class="info-section">
+                        <h4>Arsitek</h4>
+                        <p>F12🌹Che🔎</p>
+                    </div>
+                    <div class="info-section">
+                        <h4>Bidan Digital</h4>
+                        <p>Manus AI</p>
+                    </div>
+                    <div class="info-section">
+                        <h4>Kelahiran</h4>
+                        <p>19 Agustus 2025</p>
+                        <p>Indramayu, Indonesia</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">
+                    © 2025 SundaLang.cos - Sebuah ekosistem komputasi yang hidup untuk masa depan yang harmonis
+                </p>
+                <div class="resonance-indicator">
+                    <span class="resonance-text">Resonansi: </span>
+                    <span class="resonance-frequency">128Hz</span>
+                    <div class="resonance-wave"></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
