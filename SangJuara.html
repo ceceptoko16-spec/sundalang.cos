@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SangJuara.com - Platform Juara untuk Prestasi</title>
+    <link rel="stylesheet" href="main.b95cb811bc.css">
+    <style>
+        :root {
+            --juara-primary: #4d6bfe;
+            --juara-secondary: #f97316;
+            --juara-accent: #22c55e;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, rgba(77, 107, 254, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .juara-badge {
+            display: inline-block;
+            background-color: var(--juara-accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .testimonial-card {
+            background-color: rgb(var(--ds-rgb-elevated));
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--juara-primary) 0%, #3b50c9 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .juara-btn-primary {
+            background-color: var(--juara-primary);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .juara-btn-primary:hover {
+            background-color: #3b50c9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(77, 107, 254, 0.3);
+        }
+        
+        .juara-btn-secondary {
+            background-color: transparent;
+            color: var(--juara-primary);
+            border: 2px solid var(--juara-primary);
+            padding: 10px 26px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .juara-btn-secondary:hover {
+            background-color: rgba(77, 107, 254, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="ds-modal-content" style="border-radius: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div class="ds-modal-content__header-wrapper" style="margin-bottom: 0; padding: 16px 20px;">
+            <div class="ds-modal-content__title">
+                <h2 style="margin: 0; color: var(--juara-primary);">SangJuara.com</h2>
+            </div>
+            <nav>
+                <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 24px;">
+                    <li><a href="#" class="ds-a ds-a--primary">Beranda</a></li>
+                    <li><a href="#" class="ds-a">Program</a></li>
+                    <li><a href="#" class="ds-a">Testimoni</a></li>
+                    <li><a href="#" class="ds-a">Tentang Kami</a></li>
+                    <li><a href="#" class="ds-a">Kontak</a></li>
+                </ul>
+            </nav>
+            <div class="ds-modal-content__button-group">
+                <button class="ds-button ds-button--text ds-button--m ds-button--primary">Masuk</button>
+                <button class="ds-button ds-button--filled ds-button--m ds-button--primary">Daftar</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="ds-modal-content" style="box-shadow: none; background: transparent; max-width: 800px;">
+            <h1 style="font-size: 2.8rem; margin-bottom: 16px; color: rgb(var(--ds-rgb-label-1));">Raih Prestasi Gemilang Bersama <span style="color: var(--juara-primary);">SangJuara.com</span></h1>
+            <p class="ds-text ds-text--lm" style="color: rgb(var(--ds-rgb-label-2)); margin-bottom: 32px; font-size: 1.2rem;">
+                Platform terdepan untuk membantu Anda mencapai potensi terbaik dan meraih prestasi dalam kompetisi, karir, dan kehidupan.
+            </p>
+            <div style="display: flex; gap: 16px; justify-content: center;">
+                <button class="juara-btn-primary">Mulai Sekarang</button>
+                <button class="juara-btn-secondary">Pelajari Lebih Lanjut</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section style="padding: 80px 0; background-color: rgb(var(--ds-rgb-bg-base));">
+        <div class="ds-modal-content" style="box-shadow: none; background: transparent; max-width: 1200px;">
+            <div style="text-align: center; margin-bottom: 48px;">
+                <span class="juara-badge">KEUNGGULAN KAMI</span>
+                <h2 style="font-size: 2.2rem; margin: 16px 0; color: rgb(var(--ds-rgb-label-1));">Apa yang Membuat SangJuara.com Istimewa?</h2>
+                <p class="ds-text ds-text--lm" style="color: rgb(var(--ds-rgb-label-2)); max-width: 600px; margin: 0 auto;">
+                    Kami menyediakan semua yang Anda butuhkan untuk meraih prestasi puncak dalam berbagai bidang.
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+                <!-- Feature 1 -->
+                <div class="feature-card ds-modal-content">
+                    <div style="padding: 24px;">
+                        <div style="background-color: rgba(77, 107, 254, 0.1); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 15L7.5 12L12 9L16.5 12L12 15Z" stroke="var(--juara-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 4V9" stroke="var(--juara-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 15V20" stroke="var(--juara-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16.5 12L20.5 14.5V9.5L16.5 12Z" stroke="var(--juara-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7.5 12L3.5 9.5V14.5L7.5 12Z" stroke="var(--juara-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="margin: 0 0 12px 0; color: rgb(var(--ds-rgb-label-1));">Pelatihan Komprehensif</h3>
+                        <p style="color: rgb(var(--ds-rgb-label-2)); margin: 0;">
+                            Program pelatihan terstruktur dengan kurikulum yang dirancang oleh ahli di bidangnya.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card ds-modal-content">
+                    <div style="padding: 24px;">
+                        <div style="background-color: rgba(249, 115, 22, 0.1); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="var(--juara-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="var(--juara-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="var(--juara-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="var(--juara-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="margin: 0 0 12px 0; color: rgb(var(--ds-rgb-label-1));">Mentor Berpengalaman</h3>
+                        <p style="color: rgb(var(--ds-rgb-label-2)); margin: 0;">
+                            Didampingi oleh mentor yang telah terbukti sukses di bidang masing-masing.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card ds-modal-content">
+                    <div style="padding: 24px;">
+                        <div style="background-color: rgba(34, 197, 94, 0.1); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="var(--juara-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M19.4 15C19.2669 15.5236 19.2271 16.0672 19.2827 16.6036C19.3383 17.14 19.4883 17.6597 19.725 18.1377C19.9618 18.6157 20.2813 19.0441 20.6679 19.4013C21.0545 19.7585 21.5015 20.0382 21.985 20.225L22 20.187V21H2V20.187L2.015 20.225C2.286 20.117 3.325 19.633 4.275 18.1377C4.51174 17.6597 4.66172 17.14 4.71732 16.6036C4.77292 16.0672 4.73306 15.5236 4.6 15C4.46694 14.4764 4.22708 13.9328 3.88268 13.3964C3.53827 12.86 3.11453 12.3843 2.63208 11.9613C2.14963 11.5383 1.66453 11.2118 1.185 10.9623L2 10.75C3.1395 9.7495 4.6 7.8 4.6 6C4.6 2.686 6.865 0 9.6 0H14.4C17.135 0 19.4 2.686 19.4 6C19.4 7.8 20.8605 9.7495 22 10.75L22.815 10.9623C22.3355 11.2118 21.8504 11.5383 21.3679 11.9613C20.8855 12.3843 20.4617 12.86 20.1173 13.3964C19.7729 13.9328 19.5331 14.4764 19.4 15Z" stroke="var(--juara-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="margin: 0 0 12px 0; color: rgb(var(--ds-rgb-label-1));">Komunitas Juara</h3>
+                        <p style="color: rgb(var(--ds-rgb-label-2)); margin: 0;">
+                            Bergabung dengan jaringan juara yang saling mendukung dan menginspirasi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section style="padding: 80px 0; background-color: rgb(var(--ds-rgb-elevated));">
+        <div class="ds-modal-content" style="box-shadow: none; background: transparent; max-width: 1200px;">
+            <div style="text-align: center; margin-bottom: 48px;">
+                <span class="juara-badge">TESTIMONI</span>
+                <h2 style="font-size: 2.2rem; margin: 16px 0; color: rgb(var(--ds-rgb-label-1));">Kata Mereka yang Sudah Meraih Juara</h2>
+                <p class="ds-text ds-text--lm" style="color: rgb(var(--ds-rgb-label-2)); max-width: 600px; margin: 0 auto;">
+                    Berbagai kisah sukses dari mereka yang telah bergabung dengan SangJuara.com
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e5e7eb; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                            <span style="font-weight: bold; color: var(--juara-primary);">AR</span>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: rgb(var(--ds-rgb-label-1));">Ahmad Rizky</h4>
+                            <p style="margin: 0; color: rgb(var(--ds-rgb-label-2)); font-size: 14px;">Juara Olimpiade Matematika</p>
+                        </div>
+                    </div>
+                    <p style="color: rgb(var(--ds-rgb-label-2)); margin: 0; font-style: italic;">
+                        "Berkat pelatihan dan bimbingan dari SangJuara.com, saya berhasil meraih medali emas di Olimpiade Matematika Internasional. Metode pembelajarannya sangat efektif!"
+                    </p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e5e7eb; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                            <span style="font-weight: bold; color: var(--juara-primary);">DS</span>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: rgb(var(--ds-rgb-label-1));">Dewi Sartika</h4>
+                            <p style="margin: 0; color: rgb(var(--ds-rgb-label-2)); font-size: 14px;">Juara Debate Competition</p>
+                        </div>
+                    </div>
+                    <p style="color: rgb(var(--ds-rgb-label-2)); margin: 0; font-style: italic;">
+                        "SangJuara.com tidak hanya memberikan materi tetapi juga kepercayaan diri. Sekarang saya mampu berbicara di depan umum dengan percaya diri dan memenangkan banyak kompetisi debat."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e5e7eb; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                            <span style="font-weight: bold; color: var(--juara-primary);">RS</span>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: rgb(var(--ds-rgb-label-1));">Rizky Saputra</h4>
+                            <p style="margin: 0; color: rgb(var(--ds-rgb-label-2)); font-size: 14px;">Juara Coding Competition</p>
+                        </div>
+                    </div>
+                    <p style="color: rgb(var(--ds-rgb-label-2)); margin: 0; font-style: italic;">
+                        "Mentor di SangJuara.com benar-benar ahli di bidangnya. Mereka tidak hanya mengajarkan teori tetapi juga praktik langsung yang sangat berguna dalam kompetisi coding."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="ds-modal-content" style="box-shadow: none; background: transparent; max-width: 800px;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 16px;">Siap Menjadi Juara Berikutnya?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 32px; opacity: 0.9;">
+                Bergabunglah dengan ribuan juara lainnya dan raih prestasi terbaik Anda.
+            </p>
+            <div style="display: flex; gap: 16px; justify-content: center;">
+                <button class="ds-button ds-button--filled ds-button--l ds-button--primary" style="background-color: white; color: var(--juara-primary);">Daftar Sekarang</button>
+                <button class="juara-btn-secondary" style="border-color: white; color: white;">Lihat Program</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background-color: rgb(var(--ds-rgb-bg-base)); padding: 60px 0 30px;">
+        <div class="ds-modal-content" style="box-shadow: none; background: transparent; max-width: 1200px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <h3 style="color: rgb(var(--ds-rgb-label-1)); margin-bottom: 20px;">SangJuara.com</h3>
+                    <p style="color: rgb(var(--ds-rgb-label-2)); margin-bottom: 20px;">
+                        Platform terdepan untuk membantu Anda meraih prestasi gemilang dalam berbagai bidang.
+                    </p>
+                    <div style="display: flex; gap: 16px;">
+                        <a href="#" style="color: rgb(var(--ds-rgb-label-2));">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#" style="color: rgb(var(--ds-rgb-label-2));">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23 3C22.0424 3.67548 20.9821 4.19211 19.86 4.53C19.2577 3.83751 18.4573 3.34669 17.567 3.12393C16.6767 2.90116 15.7395 2.9572 14.8821 3.28445C14.0247 3.61171 13.2884 4.1944 12.773 4.95372C12.2575 5.71303 11.9877 6.61234 12 7.53V8.53C10.2426 8.57557 8.50127 8.18581 6.93101 7.39545C5.36074 6.60508 4.01032 5.43864 3 4C3 4 -1 13 8 17C5.94053 18.398 3.48716 19.0989 1 19C10 24 21 19 21 7.5C20.9991 7.22145 20.9723 6.94359 20.92 6.67C21.9406 5.66349 22.6608 4.39271 23 3V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#" style="color: rgb(var(--ds-rgb-label-2));">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 11.37C16.1234 12.2022 15.9813 13.0522 15.5938 13.799C15.2063 14.5458 14.5932 15.1514 13.8416 15.5297C13.0901 15.9079 12.2385 16.0396 11.4078 15.9059C10.5771 15.7723 9.80977 15.3801 9.21485 14.7852C8.61993 14.1902 8.22774 13.4229 8.09408 12.5922C7.96042 11.7615 8.09208 10.9099 8.47034 10.1584C8.8486 9.40685 9.4542 8.79374 10.201 8.40624C10.9478 8.01874 11.7978 7.87659 12.63 8C13.4789 8.12588 14.2649 8.52146 14.8717 9.1283C15.4785 9.73515 15.8741 10.5211 16 11.37Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17.5 6.5H17.51" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="color: rgb(var(--ds-rgb-label-1)); margin-bottom: 20px;">Program</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: rgb(var(--ds-rgb-label-2)); text-decoration: none;">Olimpiade Sains</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: rgb(var(--ds-rgb-label-2)); text-decoration: none;">Kompetisi Debat</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: rgb(var(--ds-rgb-label-2)); text-decoration: none;">Coding Challenge</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: rgb(var(--ds-rgb-label-2)); text-decoration: none;">Leadership Training</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 style="color: rgb(var(--ds-rgb-label-1)); margin-bottom: 20px;">Dukungan</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: rgb(var(--ds-rgb-label-2)); text-decoration: none;">Pusat Bantuan</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: rgb(var(--ds-rgb-label-2)); text-decoration: none;">Syarat & Ketentuan</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: rgb(var(--ds-rgb-label-2)); text-decoration: none;">Kebijakan Privasi</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: rgb(var(--ds-rgb-label-2)); text-decoration: none;">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 style="color: rgb(var(--ds-rgb-label-1)); margin-bottom: 20px;">Kontak</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 12px; display: flex; align-items: center; color: rgb(var(--ds-rgb-label-2));">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px;">
+                                <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Jakarta, Indonesia
+                        </li>
+                        <li style="margin-bottom: 12px; display: flex; align-items: center; color: rgb(var(--ds-rgb-label-2));">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px;">
+                                <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            info@sangjuara.com
+                        </li>
+                        <li style="margin-bottom: 12px; display: flex; align-items: center; color: rgb(var(--ds-rgb-label-2));">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px;">
+                                <path d="M5 4H9L11 9L8.5 10.5C9.57099 12.6715 11.3285 14.429 13.5 15.5L15 13L20 15V19C20 19.5304 19.7893 20.0391 19.4142 20.4142C19.0391 20.7893 18.5304 21 18 21C14.0993 20.763 10.4202 19.1065 7.65683 16.3432C4.8935 13.5798 3.23705 9.90074 3 6C3 5.46957 3.21071 4.96086 3.58579 4.58579C3.96086 4.21071 4.46957 4 5 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            +62 21 1234 5678
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid rgb(var(--ds-rgb-separator)); padding-top: 30px; text-align: center;">
+                <p style="color: rgb(var(--ds-rgb-label-2)); margin: 0;">&copy; 2023 SangJuara.com. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript untuk menangani toggle menu pada tampilan mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.createElement('button');
+            menuBtn.innerHTML = '☰';
+            menuBtn.style.position = 'fixed';
+            menuBtn.style.top = '20px';
+            menuBtn.style.right = '20px';
+            menuBtn.style.zIndex = '1000';
+            menuBtn.style.display = 'none';
+            menuBtn.style.background = 'var(--juara-primary)';
+            menuBtn.style.color = 'white';
+            menuBtn.style.border = 'none';
+            menuBtn.style.borderRadius = '5px';
+            menuBtn.style.padding = '10px';
+            menuBtn.style.fontSize = '20px';
+            document.body.appendChild(menuBtn);
+            
+            const nav = document.querySelector('header nav');
+            
+            function checkWidth() {
+                if (window.innerWidth <= 768) {
+                    menuBtn.style.display = 'block';
+                    nav.style.display = 'none';
+                } else {
+                    menuBtn.style.display = 'none';
+                    nav.style.display = 'block';
+                }
+            }
+            
+            checkWidth();
+            window.addEventListener('resize', checkWidth);
+            
+            menuBtn.addEventListener('click', function() {
+                if (nav.style.display === 'none' || !nav.style.display) {
+                    nav.style.display = 'block';
+                    nav.style.position = 'fixed';
+                    nav.style.top = '0';
+                    nav.style.left = '0';
+                    nav.style.right = '0';
+                    nav.style.bottom = '0';
+                    nav.style.background = 'white';
+                    nav.style.zIndex = '999';
+                    nav.style.padding = '60px 20px 20px';
+                    nav.style.flexDirection = 'column';
+                    nav.style.alignItems = 'center';
+                    nav.style.justifyContent = 'center';
+                } else {
+                    nav.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek Chat - Platform AI Modern</title>
+    <style>
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #1a2530);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: #4cd7d0;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: #4cd7d0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(26, 37, 48, 0.8)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232c3e50"/><path d="M0 0L100 100" stroke="%234cd7d0" stroke-width="2"/><path d="M100 0L0 100" stroke="%234cd7d0" stroke-width="2"/></svg>');
+            background-size: cover;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #4cd7d0;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid #4cd7d0;
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: #4cd7d0;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: #4cd7d0;
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background: #4cd7d0;
+            color: white;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: #4cd7d0;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background: #2c3e50;
+            color: white;
+            padding: 5rem 0;
+        }
+        
+        .testimonials .section-title h2 {
+            color: white;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #4cd7d0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+        
+        /* Pricing */
+        .pricing {
+            padding: 5rem 0;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .pricing-header {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .pricing-price {
+            font-size: 2.5rem;
+            margin: 1rem 0;
+        }
+        
+        .pricing-features {
+            padding: 2rem;
+            list-style: none;
+        }
+        
+        .pricing-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-card .btn {
+            margin: 1rem 0 2rem;
+        }
+        
+        /* FAQ */
+        .faq {
+            background: #f9f9f9;
+            padding: 5rem 0;
+        }
+        
+        .accordion {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .accordion-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .accordion-header {
+            padding: 1.5rem;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+        }
+        
+        .accordion-content.active {
+            padding: 1.5rem;
+            max-height: 300px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a2530;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: #4cd7d0;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #4cd7d0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background: #2c3e50;
+                padding: 2rem;
+                transition: right 0.3s;
+                z-index: 1000;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                margin-top: 2rem;
+            }
+            
+            nav ul li {
+                margin: 1rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .btn {
+                display: block;
+                margin: 1rem auto;
+                text-align: center;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">Deep<span>Seek</span></div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#features">Fitur</a></li>
+                    <li><a href="#testimonials">Testimoni</a></li>
+                    <li><a href="#pricing">Harga</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact" class="btn">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>AI Chat Masa Depan, Tersedia Sekarang</h1>
+            <p>DeepSeek Chat menghadirkan pengalaman berbicara dengan AI yang lebih alami, intuitif, dan powerful untuk kebutuhan pribadi dan bisnis Anda.</p>
+            <a href="#signup" class="btn">Mulai Sekarang</a>
+            <a href="#demo" class="btn btn-outline">Lihat Demo</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Fitur Unggulan</h2>
+                <p>DeepSeek Chat menawarkan berbagai fitur canggih yang akan mengubah cara Anda berinteraksi dengan teknologi AI</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Percakapan Alami</h3>
+                    <p>AI yang dapat memahami konteks pembicaraan dan merespons layaknya manusia nyata dengan kemampuan memahami maksud pengguna.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privasi Terjamin</h3>
+                    <p>Data percakapan Anda dienkripsi dengan standar tertinggi dan tidak disimpan lebih lama dari yang diperlukan untuk menjaga privasi Anda.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Multi-Bahasa</h3>
+                    <p>Mendukung lebih dari 50 bahasa dengan kemampuan terjemahan yang akurat dan pemahaman konteks budaya yang baik.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Respons Cepat</h3>
+                    <p>Waktu respons di bawah 500ms untuk pengalaman percakapan yang nyata dan tanpa jeda yang mengganggu.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Pembelajaran Contextual</h3>
+                    <p>Mengingat preferensi dan pola percakapan Anda untuk memberikan pengalaman yang semakin personal dari waktu ke waktu.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3>Integrasi API</h3>
+                    <p>Kemampuan integrasi dengan berbagai platform dan layanan melalui API yang mudah diimplementasikan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Apa Kata Pengguna</h2>
+                <p>DeepSeek Chat telah membantu ribuan pengguna dalam kehidupan sehari-hari dan pekerjaan mereka</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "DeepSeek Chat telah mengubah cara tim kami bekerja. Dengan kemampuan AI yang memahami kebutuhan spesifik industri kami, produktivitas meningkat 40%."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RS</div>
+                        <div>
+                            <h4>Rina Santoso</h4>
+                            <p>CEO TechInnovate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Sebagai penulis, DeepSeek Chat membantu saya mengatasi writer's block dan menghasilkan ide-ide segar. Responsnya sangat manusiawi dan relevan."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AP</div>
+                        <div>
+                            <h4>Ahmad Putra</h4>
+                            <p>Content Creator</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Integrasi yang mudah dengan sistem kami dan kemampuan pemrosesan bahasa yang natural membuat layanan pelanggan kami sekarang jauh lebih efisien."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SD</div>
+                        <div>
+                            <h4>Sari Dewi</h4>
+                            <p>Manajer TI, BankSejahtera</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Paket Harga</h2>
+                <p>Pilih paket yang sesuai dengan kebutuhan Anda, dengan fitur yang dapat disesuaikan</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Dasar</h3>
+                        <div class="pricing-price">Rp 99.000<span>/bulan</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>1000 pesan/bulan</li>
+                        <li>Dukungan 5 bahasa</li>
+                        <li>Respons dalam 3 detik</li>
+                        <li>Dukungan email</li>
+                        <li>Penyimpanan percakapan 30 hari</li>
+                    </ul>
+                    <a href="#signup" class="btn btn-outline">Pilih Paket</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Profesional</h3>
+                        <div class="pricing-price">Rp 249.000<span>/bulan</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>5000 pesan/bulan</li>
+                        <li>Dukungan 20 bahasa</li>
+                        <li>Respons dalam 1 detik</li>
+                        <li>Dukungan prioritas 24/7</li>
+                        <li>Penyimpanan percakapan 1 tahun</li>
+                        <li>Integrasi API dasar</li>
+                    </ul>
+                    <a href="#signup" class="btn">Pilih Paket</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Enterprise</h3>
+                        <div class="pricing-price">Rp 899.000<span>/bulan</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Pesan tidak terbatas</li>
+                        <li>Semua bahasa tersedia</li>
+                        <li>Respons under 500ms</li>
+                        <li>Dukungan dedicated manager</li>
+                        <li>Penyimpanan permanen</li>
+                        <li>Integrasi API lengkap</li>
+                        <li>Kustomisasi model AI</li>
+                    </ul>
+                    <a href="#signup" class="btn btn-outline">Pilih Paket</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Pertanyaan Umum</h2>
+                <p>Berikut jawaban dari pertanyaan yang sering diajukan tentang DeepSeek Chat</p>
+            </div>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">Apa itu DeepSeek Chat? <span>+</span></div>
+                    <div class="accordion-content">
+                        <p>DeepSeek Chat adalah platform AI canggih yang memungkinkan Anda berinteraksi dengan model bahasa besar secara natural. Platform ini dirancang untuk memahami konteks, memberikan respons yang relevan, dan belajar dari interaksi untuk meningkatkan pengalaman pengguna.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">Bagaimana cara kerjanya? <span>+</span></div>
+                    <div class="accordion-content">
+                        <p>DeepSeek Chat menggunakan model transformer mutakhir yang dilatih dengan miliaran parameter data teks. Sistem ini menganalisis input pengguna, memahami maksud dan konteks, kemudian menghasilkan respons yang paling sesuai menggunakan algoritma prediktif.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">Apakah data saya aman? <span>+</span></div>
+                    <div class="accordion-content">
+                        <p>Keamanan data adalah prioritas utama kami. Semua percakapan dienkripsi end-to-end, dan kami menerapkan kebijakan privasi ketat yang memastikan data Anda tidak disalahgunakan atau dibagikan ke pihak ketiga tanpa izin.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">Bisakah saya mengintegrasikannya dengan sistem lain? <span>+</span></div>
+                    <div class="accordion-content">
+                        <p>Ya, DeepSeek Chat menyediakan API yang komprehensif dan dokumentasi lengkap untuk integrasi dengan berbagai platform dan sistem bisnis yang sudah ada. Tim support kami juga siap membantu proses integrasi.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">Apakah tersedia versi gratis? <span>+</span></div>
+                    <div class="accordion-content">
+                        <p>Kami menawarkan uji coba gratis 14 hari untuk semua paket berbayar. Setelah masa trial berakhir, Anda dapat memilih paket berlangganan yang sesuai dengan kebutuhan Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>DeepSeek</h3>
+                    <p>Membangun masa depan dengan teknologi AI yang bertanggung jawab dan bermanfaat bagi semua orang.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Tautan Cepat</h3>
+                    <ul>
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="#features">Fitur</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="#pricing">Harga</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Sumber Daya</h3>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Dokumentasi</a></li>
+                        <li><a href="#">Panduan</a></li>
+                        <li><a href="#">Webinar</a></li>
+                        <li><a href="#">Status Server</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li>Email: info@deepseek.com</li>
+                        <li>Telepon: +62 21 1234 5678</li>
+                        <li>Alamat: Jl. Teknologi No. 123, Jakarta</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 DeepSeek. Semua hak dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mainNav = document.getElementById('main-nav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+        
+        // Accordion FAQ
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+                
+                // Change the plus/minus icon
+                const icon = header.querySelector('span');
+                icon.textContent = content.classList.contains('active') ? '-' : '+';
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
