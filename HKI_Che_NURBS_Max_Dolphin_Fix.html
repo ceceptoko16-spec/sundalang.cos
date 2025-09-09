@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lab 3D NURBS Generator — HKI Che Max • Dolphin + Dense Particles (Fix)</title>
+  <style>
+    :root{
+      --bg:#0a0e1a; --panel:rgba(8,12,20,.88); --line:#1f2c46; --ink:#d7ecff; --acc:#ffd1e6; --rhino:#20c0e8;
+    }
+    html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--ink);font:14px/1.45 'Segoe UI',system-ui}
+    canvas{display:block;width:100%;height:100%}
+    /* HEADER: keep original positions & icons */
+    .topbar{position:fixed;left:12px;top:12px;z-index:100;display:flex;align-items:center;gap:10px}
+    .icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;cursor:pointer;
+          background:rgba(12,18,32,.9);border:1px solid rgba(255,255,255,.1);color:var(--acc);
+          backdrop-filter:saturate(140%) blur(12px);user-select:none;font-size:20px;transition:.2s}
+    .icon:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.4);color:var(--rhino)}
+    /* Right panel (unchanged position) */
+    .panel{position:fixed;right:16px;top:70px;width:340px;max-height:calc(100vh - 90px);overflow:auto;z-index:99;color:var(--ink);
+           background:var(--panel);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px;
+           backdrop-filter:saturate(180%) blur(16px);box-shadow:0 10px 30px rgba(0,0,0,.3);display:none}
+    .panel.show{display:block;animation:fadeIn .25s ease}
+    .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+    .panel-header h3{margin:0;font:700 16px 'Segoe UI';color:var(--rhino)}
+    .close-btn{background:none;border:none;color:var(--ink);font-size:20px;cursor:pointer;opacity:.8}
+    .sec{border-top:1px solid var(--line);margin-top:14px;padding-top:14px}
+    h4{margin:0 0 10px 0;font:600 14px 'Segoe UI';letter-spacing:.3px;color:#c9e6ff;display:flex;gap:8px;align-items:center}
+    label{display:grid;grid-template-columns:1fr 110px;gap:10px;align-items:center;margin:8px 0}
+    input[type=range],input[type=number],select,button{background:#0f1729;border:1px solid #29406a;color:#e7f6ff;border-radius:8px;padding:8px 10px;font:13px 'Segoe UI'}
+    button{cursor:pointer;background:linear-gradient(90deg,#2563eb,var(--rhino));border:none;color:#fff;font-weight:600}
+    .row{display:flex;gap:8px;flex-wrap:wrap}
+    .kv{display:grid;grid-template-columns:120px 1fr;gap:8px 10px;align-items:center}
+    .badge{font:12px ui-monospace;background:#0e1a31;border:1px solid #26406c;border-radius:6px;padding:4px 8px;color:#9edaff;text-align:center}
+    .meter{height:10px;background:#0d1526;border:1px solid #29406a;border-radius:999px;overflow:hidden;margin:10px 0}
+    .bar{height:100%;width:0;background:linear-gradient(90deg,#2dd4bf,var(--rhino) 60%,#60a5fa)}
+    .tools-panel{position:fixed;left:70px;top:12px;background:var(--panel);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px;display:none;flex-direction:column;gap:8px;z-index:98}
+    .tools-panel.show{display:flex;animation:fadeIn .25s ease}
+    .tool-btn{width:40px;height:40px;border-radius:8px;display:grid;place-items:center;background:rgba(12,18,32,.9);border:1px solid rgba(255,255,255,.1);color:var(--acc);font-size:18px}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .status{position:fixed;left:12px;bottom:12px;background:rgba(8,12,20,.65);border:1px solid rgba(255,255,255,.09);padding:8px 10px;border-radius:10px;font:12px ui-monospace;color:#9edaff}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+</head>
+<body>
+  <!-- Keep icons & layout -->
+  <div class="topbar">
+    <div id="btnHome" class="icon" title="Home">🌹</div>
+    <div id="btnFiles" class="icon" title="File Manager">📁</div>
+    <div id="btnTools" class="icon" title="Tools">🛠️</div>
+  </div>
+  <div class="tools-panel" id="toolsPanel">
+    <div class="tool-btn" title="Move">↔️</div>
+    <div class="tool-btn" title="Rotate">🔄</div>
+    <div class="tool-btn" title="Scale">📏</div>
+    <div class="tool-btn" title="Extrude">🔲</div>
+    <div class="tool-btn" title="Sculpt">🗿</div>
+  </div>
+  <div id="panel" class="panel">
+    <div class="panel-header">
+      <h3>HKI Control Panel</h3>
+      <button class="close-btn" id="btnClosePanel">×</button>
+    </div>
+
+    <div class="sec">
+      <h4>🧮 HKI Calculator</h4>
+      <div class="row">
+        <label>Bit Depth <input id="bit" type="number" min="24" max="64" step="1" value="42"></label>
+        <label>PPI <input id="ppi" type="number" min="150" max="2400" step="10" value="900"></label>
+        <label>Nits <input id="nits" type="number" min="1000" max="50000" step="100" value="30000"></label>
+      </div>
+      <div class="kv">
+        <div>Harmony (H)</div><div><span id="vH" class="badge">-</span></div>
+        <div>UHS</div><div><span id="vUHS" class="badge">-</span></div>
+        <div>MDQS</div><div><span id="vMDQS" class="badge">-</span></div>
+        <div>Particles</div><div><span id="vN" class="badge">-</span></div>
+      </div>
+      <div class="meter"><div id="barH" class="bar"></div></div>
+      <div class="row">
+        <button id="btnApplyHKI">Terapkan</button>
+        <button id="btnSnap">Snapshot</button>
+        <button id="btnExport">Export GLB</button>
+        <div class="icon" id="btnSign" title="Che Sign">✦</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h4>📐 NURBS Surface</h4>
+      <div class="row">
+        <label>Degree U <input id="degU" type="number" min="1" max="5" step="1" value="3"></label>
+        <label>Degree V <input id="degV" type="number" min="1" max="5" step="1" value="3"></label>
+        <label>Res U <input id="resU" type="number" min="8" max="256" step="1" value="80"></label>
+        <label>Res V <input id="resV" type="number" min="8" max="256" step="1" value="80"></label>
+      </div>
+      <div class="row">
+        <button id="btnResetCP">Reset CP</button>
+        <button id="btnWire">Toggle Wire</button>
+        <button id="btnShowCP">Control Lattice</button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h4>🌫️ Particle Cloak</h4>
+      <label>Density <input id="dens" type="range" min="0" max="1" step="0.01" value="0.75"></label>
+      <label>Size <input id="psize" type="range" min="0.5" max="6" step="0.1" value="2.8"></label>
+      <label>Glow <input id="pglow" type="range" min="0" max="1" step="0.01" value="0.6"></label>
+    </div>
+
+    <div class="sec">
+      <h4>🐬 Dolphin Avatar (True‑Color)</h4>
+      <label>Visible <input id="dOn" type="checkbox" checked></label>
+      <label>Top <input id="cTop" type="color" value="#6b7c88"></label>
+      <label>Side <input id="cSide" type="color" value="#8d9aa6"></label>
+      <label>Belly <input id="cBelly" type="color" value="#e6eef5"></label>
+      <label>Softness <input id="tcSoft" type="range" min="0.1" max="2" step="0.05" value="0.8"></label>
+      <label>Speckle <input id="tcSpeck" type="range" min="0" max="1" step="0.01" value="0.25"></label>
+      <label>Opacity <input id="tcAlpha" type="range" min="0.6" max="1" step="0.02" value="1.0"></label>
+      <label>Speed <input id="tcSpeed" type="range" min="0.2" max="3" step="0.1" value="1.0"></label>
+      <label>Scale <input id="tcScale" type="range" min="0.5" max="3" step="0.1" value="1.2"></label>
+    </div>
+  </div>
+
+  <div class="status" id="status">Ready</div>
+  <canvas id="cv"></canvas>
+
+<script>
+(()=>{
+  /* ======= helpers ======= */
+  const $=id=>document.getElementById(id);
+  const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+  const debounce=(fn,ms=160)=>{ let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args),ms); }; };
+
+  /* ======= renderer/scene (keep bg) ======= */
+  const canvas=$('cv');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));
+  renderer.setSize(innerWidth,innerHeight,false);
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.15;
+
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x0a0e1a);
+  scene.fog=new THREE.Fog(0x0a0e1a,420,1400);
+
+  const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,0.1,20000);
+  camera.position.set(0,120,520);
+
+  const controls=new THREE.OrbitControls(camera, canvas);
+  controls.enableDamping=true; controls.dampingFactor=.06; controls.minDistance=80; controls.maxDistance=3000; controls.maxPolarAngle=Math.PI/2;
+
+  addEventListener('resize', ()=>{
+    const w=innerWidth,h=innerHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+  });
+
+  /* ======= lights ======= */
+  scene.add(new THREE.HemisphereLight(0x9fd0ff,0x0b1018,0.82));
+  const dir=new THREE.DirectionalLight(0xffffff,0.95); dir.position.set(300,400,200); scene.add(dir);
+  scene.add(new THREE.AmbientLight(0x4466aa,0.38));
+
+  /* ======= axes + grid (requested) ======= */
+  const axes=new THREE.AxesHelper(150); scene.add(axes);
+  const grid=new THREE.GridHelper(800,40,0x1a2c4a,0x0d1726); grid.position.y=-50; scene.add(grid);
+
+  /* ======= UI wiring (keep icon behaviors) ======= */
+  $('btnTools').onclick=()=>{ $('toolsPanel').classList.toggle('show'); $('panel').classList.remove('show'); };
+  $('btnFiles').onclick=()=>{ $('panel').classList.toggle('show'); $('toolsPanel').classList.remove('show'); };
+  $('btnClosePanel').onclick=()=>$('panel').classList.remove('show');
+  $('btnHome').onclick=()=>{ controls.reset(); camera.position.set(0,120,520); };
+
+  /* ======= NURBS minimal core (weights=1) ======= */
+  function uniformKnot(n,p){ const m=n+p+1,U=new Array(m+1); for(let i=0;i<=m;i++){ U[i]= i<=p?0 : (i>=m-p?1:(i-p)/(m-2*p)); } return U; }
+  function findSpan(n,p,u,U){ if(u>=U[n+1]) return n; if(u<=U[p]) return p; let low=p,high=n+1,mid=(low+high)>>1; while(u<U[mid]||u>=U[mid+1]){ if(u<U[mid]) high=mid; else low=mid; mid=(low+high)>>1; } return mid; }
+  function basisFuns(i,u,p,U){ const N=new Array(p+1).fill(0); const left=new Array(p+1),right=new Array(p+1); N[0]=1.0;
+    for(let j=1;j<=p;j++){ left[j]=u-U[i+1-j]; right[j]=U[i+j]-u; let saved=0.0; for(let r=0;r<j;r++){ const temp=N[r]/(right[r+1]+left[j-r]); N[r]=saved+right[r+1]*temp; saved=left[j-r]*temp; } N[j]=saved; } return N; }
+  let cpsU=6,cpsV=6,degU=3,degV=3, ctrl=[], knotU=[], knotV=[];
+  function resetCP(){ ctrl=[]; for(let i=0;i<cpsU;i++){ const row=[]; for(let j=0;j<cpsV;j++){ const x=(i-(cpsU-1)/2)*50; const z=(j-(cpsV-1)/2)*50; const y=30*Math.sin(i*.7)+20*Math.cos(j*.6); row.push(new THREE.Vector3(x,y,z)); } ctrl.push(row); } knotU=uniformKnot(cpsU-1,degU); knotV=uniformKnot(cpsV-1,degV); }
+  resetCP();
+  function evaluateSurface(u,v){ const nu=cpsU-1,nv=cpsV-1; const su=findSpan(nu,degU,u,knotU), sv=findSpan(nv,degV,v,knotV); const Nu=basisFuns(su,u,degU,knotU), Nv=basisFuns(sv,v,degV,knotV); const S=new THREE.Vector3();
+    for(let l=0;l<=degV;l++){ const temp=new THREE.Vector3(); for(let k=0;k<=degU;k++){ const P=ctrl[su-degU+k][sv-degV+l]; temp.x+=Nu[k]*P.x; temp.y+=Nu[k]*P.y; temp.z+=Nu[k]*P.z; } S.x+=Nv[l]*temp.x; S.y+=Nv[l]*temp.y; S.z+=Nv[l]*temp.z; } return S; }
+
+  /* Control lattice visuals */
+  const cpGroup=new THREE.Group(); scene.add(cpGroup);
+  const cpMat=new THREE.MeshBasicMaterial({color:0x67b1ff}); const cpGeo=new THREE.SphereGeometry(3.5,14,10);
+  function refreshCPMeshes(){
+    cpGroup.clear();
+    for(let i=0;i<cpsU;i++){ for(let j=0;j<cpsV;j++){ const m=new THREE.Mesh(cpGeo,cpMat); m.position.copy(ctrl[i][j]); m.userData={i,j}; cpGroup.add(m); } }
+    const lineMat=new THREE.LineBasicMaterial({color:0x335588,transparent:true,opacity:.4});
+    for(let i=0;i<cpsU;i++){ const pts=[]; for(let j=0;j<cpsV;j++) pts.push(ctrl[i][j]); const geom=new THREE.BufferGeometry().setFromPoints(pts); cpGroup.add(new THREE.Line(geom,lineMat)); }
+    for(let j=0;j<cpsV;j++){ const pts=[]; for(let i=0;i<cpsU;i++) pts.push(ctrl[i][j]); const geom=new THREE.BufferGeometry().setFromPoints(pts); cpGroup.add(new THREE.Line(geom,lineMat)); }
+  }
+  refreshCPMeshes();
+
+  /* Draggable CP */
+  const ray=new THREE.Raycaster(); const mouse=new THREE.Vector2(); let draggingCP=null, dragPlane=new THREE.Plane(), dragOffset=new THREE.Vector3();
+  function pickCP(e){ const r=canvas.getBoundingClientRect(); mouse.x=((e.clientX-r.left)/r.width)*2-1; mouse.y=-((e.clientY-r.top)/r.height)*2+1; ray.setFromCamera(mouse,camera); const hits=ray.intersectObjects(cpGroup.children,false); return hits.length?hits[0]:null; }
+  canvas.addEventListener('mousedown',e=>{ const hit=pickCP(e); if(hit && hit.object instanceof THREE.Mesh){ draggingCP=hit.object; dragPlane.setFromNormalAndCoplanarPoint(camera.getWorldDirection(new THREE.Vector3()).negate(), draggingCP.position); const ip=new THREE.Vector3(); ray.ray.intersectPlane(dragPlane,ip); dragOffset.copy(ip).sub(draggingCP.position); controls.enabled=false; } });
+  addEventListener('mousemove',e=>{ if(!draggingCP) return; const r=canvas.getBoundingClientRect(); mouse.x=((e.clientX-r.left)/r.width)*2-1; mouse.y=-((e.clientY-r.top)/r.height)*2+1; ray.setFromCamera(mouse,camera); const ip=new THREE.Vector3(); ray.ray.intersectPlane(dragPlane,ip); const pos=ip.clone().sub(dragOffset); draggingCP.position.copy(pos); const {i,j}=draggingCP.userData; ctrl[i][j].copy(pos); requestSurfaceUpdate(); refreshCPMeshes(); });
+  addEventListener('mouseup',()=>{ draggingCP=null; controls.enabled=true; });
+
+  /* Surface shader */
+  const surfMat=new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false, side:THREE.DoubleSide,
+    uniforms:{ uTime:{value:0}, uWire:{value:0.0}, uHue:{value:.58}, uIri:{value:.6}, uAlpha:{value:.92}, uQuant:{value:8.0},
+               uShrinkIntensity:{value:0.0}, uShrinkSpeed:{value:1.0} },
+    vertexShader:`uniform float uTime; uniform float uShrinkIntensity; uniform float uShrinkSpeed; varying vec3 vN; varying vec3 vP;
+      void main(){ vN=normalize(normalMatrix*normal); vec3 p=position;
+        float shrink=sin(uTime*uShrinkSpeed + length(p)*0.01)*uShrinkIntensity; p -= vN*shrink*8.0;
+        p += 0.6*vN*sin(uTime*1.4 + position.x*.02 + position.y*.01);
+        vP=(modelMatrix*vec4(p,1.)).xyz; gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.); }`,
+    fragmentShader:`precision highp float; uniform float uTime,uWire,uHue,uIri,uAlpha,uQuant; varying vec3 vN; varying vec3 vP;
+      vec3 h2rgb(float h){ h=mod(h,1.); float r=abs(h*6.-3.)-1.; float g=2.-abs(h*6.-2.); float b=2.-abs(h*6.-4.); return clamp(vec3(r,g,b),0.,1.); }
+      void main(){ vec3 N=normalize(vN); vec3 V=normalize(-vP); float fres=pow(1.-max(dot(N,V),0.),2.);
+        float iri=smoothstep(0.,1.,fres)*uIri; float hue=uHue + .08*sin(uTime*.25 + vP.x*.002); vec3 base=h2rgb(hue);
+        float lum=.35 + .5*(dot(N,normalize(vec3(.2,.7,.6)))*.5+.5) + iri*.45; float q=floor(lum*uQuant)/uQuant; vec3 col=base*q + iri*vec3(1.,.9,1.2);
+        if(uWire>.5) col=mix(col,vec3(.6,.8,1.),.45); float a=uAlpha*(.82+.18*fres); if(a<.02) discard; gl_FragColor=vec4(col,a); }`
+  });
+  let surfMesh=new THREE.Mesh(new THREE.BufferGeometry(), surfMat); scene.add(surfMesh);
+  let resU=80,resV=80;
+  function buildSurface(){
+    const pos=[]; const idx=[]; const cols=resV+1;
+    for(let i=0;i<=resU;i++){ const u=i/resU; for(let j=0;j<=resV;j++){ const v=j/resV; const P=evaluateSurface(u,v); pos.push(P.x,P.y,P.z); } }
+    for(let i=0;i<resU;i++){ for(let j=0;j<resV;j++){ const a=i*cols+j, b=a+1, c=a+cols, d=c+1; idx.push(a,b,d, a,d,c); } }
+    const g=new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(pos),3)); g.setIndex(idx); g.computeVertexNormals();
+    surfMesh.geometry.dispose(); surfMesh.geometry=g;
+  }
+  const requestSurfaceUpdate=debounce(buildSurface,16); buildSurface();
+
+  /* ======= Dense GPU particles (instanced Points) ======= */
+  let pGroup=new THREE.Group(); scene.add(pGroup); let pMat=null, pCount=0;
+  function rebuildParticles(){
+    const dens=parseFloat($('dens').value); const base=Math.floor((state.N_eff||120000)*dens);
+    const target=clamp(base, 8000, 400000); // cap for smoothness; tweak if GPU strong
+    if(target===pCount && pMat){ pMat.uniforms.uSize.value=parseFloat($('psize').value); pMat.uniforms.uGlow.value=parseFloat($('pglow').value); return; }
+    pGroup.clear(); pCount=target;
+    const positions=new Float32Array(target*3), colors=new Float32Array(target*3), randoms=new Float32Array(target);
+    for(let i=0;i<target;i++){
+      positions[i*3+0]=(Math.random()*2-1)*650;
+      positions[i*3+1]=(Math.random()*2-1)*380;
+      positions[i*3+2]=(Math.random()*2-1)*650;
+      colors[i*3+0]=0.65+Math.random()*0.35; colors[i*3+1]=0.75+Math.random()*0.25; colors[i*3+2]=0.95+Math.random()*0.15;
+      randoms[i]=Math.random();
+    }
+    const geo=new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute([0,0,0],3));
+    geo.setAttribute('aOffset', new THREE.InstancedBufferAttribute(positions,3));
+    geo.setAttribute('aColor', new THREE.InstancedBufferAttribute(colors,3));
+    geo.setAttribute('aRandom', new THREE.InstancedBufferAttribute(randoms,1));
+    pMat=new THREE.ShaderMaterial({
+      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+      uniforms:{ uTime:{value:0}, uSize:{value:parseFloat($('psize').value)}, uGlow:{value:parseFloat($('pglow').value)} },
+      vertexShader:`attribute vec3 aOffset; attribute vec3 aColor; attribute float aRandom; uniform float uTime; uniform float uSize; varying vec3 vColor;
+        void main(){ vColor=aColor; vec3 p=aOffset + 12.0*vec3( sin(uTime*.7 + aOffset.x*.002 + aRandom*6.28),
+                                                                  cos(uTime*.6 + aOffset.y*.002 + aRandom*4.0),
+                                                                  sin(uTime*.8 + aOffset.z*.002 + aRandom*3.14));
+          gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.); gl_PointSize=uSize + 8.0*clamp(gl_Position.z/1000.0,0.0,1.0); }`,
+      fragmentShader:`precision highp float; uniform float uGlow; varying vec3 vColor;
+        void main(){ vec2 uv=gl_PointCoord-vec2(.5); float d=dot(uv,uv); float a=smoothstep(.25,0.,d);
+          vec3 col=mix(vec3(.6,.9,1.2), vColor, uGlow); gl_FragColor=vec4(col, a*(.5+.5*uGlow)); if(gl_FragColor.a<.03) discard; }`
+    });
+    const pts=new THREE.Points(geo,pMat); pts.frustumCulled=false; pGroup.add(pts);
+  }
+  ['dens','psize','pglow'].forEach(id=> $(id).oninput=rebuildParticles);
+
+  /* ======= HKI Calculator (enhanced) ======= */
+  const state={H:0,UHS:0.6,MDQS:0.7,N_eff:120000};
+  function gammaMap(nits){ const L=nits/10000; return Math.pow(clamp(L,0,1),1/2.2); }
+  function calcHKI(){
+    const bit=parseInt($('bit').value,10), ppi=parseFloat($('ppi').value), nits=parseFloat($('nits').value);
+    const Cb=clamp((bit-24)/40,0,1), Cr=clamp((Math.log2(ppi)-7)/5,0,1), Cl=clamp(gammaMap(nits),0,1);
+    const H=clamp(0.55*Cb + 0.30*Cr + 0.15*Cl, 0, 2);
+    const UHS=clamp(0.58 + 0.18*Cr*Cr + 0.16*Cb - 0.08*(Cl*(1/2.2)), 0.5, 0.99);
+    const MDQS=clamp(0.66 + 0.05*Math.sin(ppi*0.008) + 0.06*Math.cos(bit*0.17) + 0.08*Cl, 0.5, 0.99);
+    const N_eff=Math.floor((ppi*ppi/3.5) * (1+Cb*0.8) * (1 + Math.min(2.5, nits/12000)));
+    state.H=H; state.UHS=UHS; state.MDQS=MDQS; state.N_eff=N_eff;
+    $('vH').textContent=H.toFixed(3); $('vUHS').textContent=UHS.toFixed(3); $('vMDQS').textContent=MDQS.toFixed(3); $('vN').textContent=N_eff.toLocaleString('id-ID');
+    $('barH').style.width=(H/2*100).toFixed(0)+'%';
+  }
+  ['bit','ppi','nits'].forEach(id=> $(id).oninput=debounce(calcHKI,120)); calcHKI();
+  $('btnApplyHKI').onclick=()=>{ surfMat.uniforms.uHue.value=0.58 + 0.08*state.H; surfMat.uniforms.uIri.value=0.5 + 0.25*(state.UHS-0.5); surfMat.uniforms.uQuant.value=6 + 6*(state.MDQS-0.5); rebuildParticles(); };
+
+  /* ======= Dolphin avatar (TRUE‑COLOR, opaque) ======= */
+  function makeTC(top,side,belly,soft,speck,alpha){
+    const C=(hex)=>{const c=new THREE.Color(hex); return new THREE.Vector3(c.r,c.g,c.b);};
+    return new THREE.ShaderMaterial({
+      transparent:true, depthWrite:true, side:THREE.DoubleSide,
+      uniforms:{ uTop:{value:C(top)}, uSide:{value:C(side)}, uBelly:{value:C(belly)},
+                 uSoft:{value:soft}, uSpeck:{value:speck}, uAlpha:{value:alpha}, uTime:{value:0}},
+      vertexShader:`varying vec3 vN; varying vec3 vW; varying vec3 vL;
+        void main(){ vN=normalize(normalMatrix*normal); vec4 w=modelMatrix*vec4(position,1.); vW=w.xyz; vL=normalize(vec3(.3,.8,.4));
+          gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+      fragmentShader:`precision highp float; varying vec3 vN,vW,vL; uniform vec3 uTop,uSide,uBelly; uniform float uSoft,uSpeck,uAlpha,uTime;
+        float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);} float noise(vec2 p){vec2 i=floor(p),f=fract(p);
+          float a=hash(i),b=hash(i+vec2(1,0)),c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1)); vec2 u=f*f*(3.-2.*f); return mix(a,b,u.x)+(c-a)*u.y*(1.-u.x)+(d-b)*u.x*u.y;}
+        void main(){ float h=clamp(vW.y/120.+.5,0.,1.); float t1=smoothstep(.35-uSoft*.15, .65+uSoft*.15, h);
+          float t2=smoothstep(.05, .45+uSoft*.15, h);
+          vec3 col=mix(uTop,uSide,t1); col=mix(uBelly,col,t2); col=mix(col, vec3(.9,1.,1.1), (1.-t2)*.15);
+          float sp=noise(vW.xz*.08)*noise(vW.xz*.4); col += (sp-.25)*.12*uSpeck;
+          vec3 N=normalize(vN); float ndl=max(dot(N, normalize(vL)),0.); float wrap=pow(ndl*.5+.5,1.2);
+          float fres=pow(1.-max(dot(N, normalize(-vW)),0.),2.0);
+          col *= (.58 + .52*wrap); col += .18*fres;
+          gl_FragColor=vec4(col, uAlpha); if(gl_FragColor.a<.02) discard; }`
+    });
+  }
+  function buildDolphin(){
+    const g=new THREE.Group();
+    const body=new THREE.Mesh(new THREE.CapsuleGeometry(18,140,16,22), new THREE.MeshBasicMaterial({color:0x88a8c0}));
+    const tail=new THREE.Mesh(new THREE.PlaneGeometry(70,50), new THREE.MeshBasicMaterial({color:0xaad1ff, side:THREE.DoubleSide}));
+    tail.position.set(0,-70,-15); tail.rotation.y=Math.PI/2; tail.rotation.z=0.2;
+    const finL=new THREE.Mesh(new THREE.ConeGeometry(16,38,16), new THREE.MeshBasicMaterial({color:0x88a8c0}));
+    finL.position.set(-18,-5,10); finL.rotation.z=Math.PI; finL.rotation.x=Math.PI*.55;
+    const finR=finL.clone(); finR.position.x*=-1; finR.position.z*=-1;
+    const dorsal=new THREE.Mesh(new THREE.ConeGeometry(16,36,16), new THREE.MeshBasicMaterial({color:0x88a8c0})); dorsal.position.set(0,16,0); dorsal.rotation.x=Math.PI;
+    const nose=new THREE.Mesh(new THREE.CapsuleGeometry(8,20,8,16), new THREE.MeshBasicMaterial({color:0x88a8c0})); nose.position.set(0,0,75);
+    const eyeMat=new THREE.MeshBasicMaterial({color:0x111315}); const eyeL=new THREE.Mesh(new THREE.SphereGeometry(3.2,16,12), eyeMat); const eyeR=eyeL.clone();
+    eyeL.position.set(8,1,48); eyeR.position.set(-8,1,48);
+    g.add(body,tail,finL,finR,dorsal,nose,eyeL,eyeR); return g;
+  }
+  const dParams={top:'#6b7c88',side:'#8d9aa6',belly:'#e6eef5',soft:0.8,speck:0.25,alpha:1.0};
+  let dolphin=buildDolphin(); let tcMat=makeTC(dParams.top,dParams.side,dParams.belly,dParams.soft,dParams.speck,dParams.alpha);
+  function applyDolphinMaterial(){ dolphin.traverse(o=>{ if(o.isMesh && o.material && o.material.color && o.material.color.getHex && o.material.color.getHex()===0x111315) return; o.material=tcMat; o.material.needsUpdate=true; }); }
+  scene.add(dolphin); applyDolphinMaterial(); let dSpeed=1.0, dScale=1.2; dolphin.scale.setScalar(dScale);
+
+  const path=new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-220,30,-160), new THREE.Vector3(-60,45,-10), new THREE.Vector3(80,40,30),
+    new THREE.Vector3(200,55,130), new THREE.Vector3(60,70,220), new THREE.Vector3(-160,50,140)
+  ], true,'catmullrom', .15);
+
+  /* Dolphin UI bindings */
+  $('dOn').oninput=e=>{ dolphin.visible=e.target.checked; };
+  $('cTop').oninput=e=>{ const c=new THREE.Color(e.target.value); tcMat.uniforms.uTop.value.set(c.r,c.g,c.b); };
+  $('cSide').oninput=e=>{ const c=new THREE.Color(e.target.value); tcMat.uniforms.uSide.value.set(c.r,c.g,c.b); };
+  $('cBelly').oninput=e=>{ const c=new THREE.Color(e.target.value); tcMat.uniforms.uBelly.value.set(c.r,c.g,c.b); };
+  $('tcSoft').oninput=e=>{ tcMat.uniforms.uSoft.value=parseFloat(e.target.value); };
+  $('tcSpeck').oninput=e=>{ tcMat.uniforms.uSpeck.value=parseFloat(e.target.value); };
+  $('tcAlpha').oninput=e=>{ const v=parseFloat(e.target.value); tcMat.uniforms.uAlpha.value=v; };
+  $('tcSpeed').oninput=e=>{ dSpeed=parseFloat(e.target.value); };
+  $('tcScale').oninput=e=>{ dScale=parseFloat(e.target.value); dolphin.scale.setScalar(dScale); };
+
+  /* ======= Snap & Export (safe) ======= */
+  $('btnSnap').onclick=()=>{ renderer.render(scene,camera); renderer.domElement.toBlob(b=>{ const a=document.createElement('a'); const url=URL.createObjectURL(b); a.href=url; a.download='HKI_NURBS_Snapshot_'+Date.now()+'.png'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1200); },'image/png',1); };
+  $('btnExport').onclick=()=>{ alert('Export GLB: gunakan studio ekspor di versi Three.js modular. (Placeholder aman)'); };
+  $('btnSign').onclick=()=> alert('HKI Che Max • NURBS + Particle Cloak + Dolphin (True‑Color)');
+  $('btnWire').onclick=()=>{ surfMat.uniforms.uWire.value = 1.0 - surfMat.uniforms.uWire.value; };
+  $('btnShowCP').onclick=()=>{ cpGroup.visible=!cpGroup.visible; };
+  $('btnResetCP').onclick=()=>{ resetCP(); refreshCPMeshes(); buildSurface(); };
+
+  /* ======= animate ======= */
+  let last=performance.now(), t=0;
+  function loop(now){ requestAnimationFrame(loop); const dt=Math.min(0.05,(now-last)/1000); last=now; controls.update();
+    // animate surface & particles
+    surfMat.uniforms.uTime.value=now*0.001;
+    if(pMat) pMat.uniforms.uTime.value=now*0.001;
+    // swim dolphin
+    t=(t+dt*0.08*dSpeed)%1.0; const p=path.getPointAt(t), fw=path.getTangentAt(t).normalize(); dolphin.position.copy(p); dolphin.lookAt(p.clone().add(fw));
+    renderer.render(scene,camera); }
+  rebuildParticles(); loop(last);
+
+  /* ======= Status ======= */
+  const status=$('status'); function setStatus(s){ status.textContent=s; } setStatus('Loaded • True‑Color Dolphin + Dense Particles');
+
+  /* ======= Bug‑notes fixes =======
+     - No history arrays here (so no leak); debounced inputs; guards on toggles;
+     - Buttons wired; keep layout & background; axes/grid added as requested.
+  ======= */
+})();</script>
+</body>
+</html>
